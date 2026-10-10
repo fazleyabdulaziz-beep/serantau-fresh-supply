@@ -1,125 +1,441 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ms">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Serantau Fresh Supply</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f3faf5;
-      color: #123d32;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Serantau Fresh Supply | Ikan Keli Segar & Bersih, Langkawi</title>
+<meta name="description" content="Pembekal ikan keli segar yang siap dibersihkan di Langkawi & Kedah. Pesan terus melalui WhatsApp.">
+<meta name="theme-color" content="#071C42">
+<link rel="icon" type="image/png" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#071C42; --pond:#0B2B5E; --pond-2:#0F6BC4; --slate:#43556F;
+  --paddy:#F1F7FC; --white:#fff; --line:#D3E2F0;
+  --chilli:#1AB7F0; --chilli-d:#0E9BD0; --wa:#1FAF57;
+  --display:'Bricolage Grotesque','Segoe UI',Arial,sans-serif;
+  --body:'Plus Jakarta Sans','Segoe UI',Roboto,Arial,sans-serif;
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{font-family:var(--body);background:var(--paddy);color:var(--ink);line-height:1.65;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+:focus-visible{outline:3px solid var(--chilli);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1140px;margin:0 auto;padding:0 22px}
+h1,h2,h3{font-family:var(--display);line-height:1.1;letter-spacing:-.02em}
 
-    header {
-      background: #064e3b;
-      color: white;
-      text-align: center;
-      padding: 35px 20px;
-    }
+/* Header */
+.site-header{position:fixed;inset:0 0 auto 0;z-index:50;padding:14px 0;transition:background .35s,box-shadow .35s,padding .35s}
+.site-header.scrolled{background:rgba(7,28,66,.92);backdrop-filter:blur(10px);box-shadow:0 6px 24px rgba(0,0,0,.18);padding:8px 0}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{display:flex;align-items:center;gap:12px;color:#fff}
+.brand img{width:50px;height:50px;object-fit:contain;border-radius:50%;background:#fff;box-shadow:0 0 0 2px rgba(255,255,255,.25)}
+.brand b{font-family:var(--display);font-size:18px;letter-spacing:-.01em;display:block;line-height:1.1}
+.brand small{font-size:12px;opacity:.7}
+.nav{display:flex;align-items:center;gap:6px}
+.nav a{color:#fff;padding:9px 14px;border-radius:99px;font-weight:500;font-size:15px;opacity:.85;transition:.25s}
+.nav a:hover{opacity:1;background:rgba(255,255,255,.12)}
+.nav .cta{background:var(--chilli);color:var(--ink);opacity:1;font-weight:700;margin-left:6px}
+.nav .cta:hover{background:var(--chilli-d)}
+.burger{display:none;width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,.12);position:relative}
+.burger span{position:absolute;left:12px;right:12px;height:2px;background:#fff;border-radius:2px;transition:.3s var(--ease)}
+.burger span:nth-child(1){top:16px}.burger span:nth-child(2){top:27px}
+.burger[aria-expanded=true] span:nth-child(1){top:21px;transform:rotate(45deg)}
+.burger[aria-expanded=true] span:nth-child(2){top:21px;transform:rotate(-45deg)}
 
-    header h1 {
-      margin-bottom: 8px;
-    }
+/* Hero */
+.hero{position:relative;overflow:hidden;background:radial-gradient(120% 90% at 80% 0%,var(--pond-2) 0%,var(--pond) 45%,var(--ink) 100%);color:#fff;padding:130px 0 150px}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center;position:relative;z-index:2}
+.hero h1{font-size:clamp(38px,6vw,68px);font-weight:800;margin-bottom:20px}
+.hero p.lead{font-size:clamp(16px,2vw,19px);max-width:520px;opacity:.88;margin-bottom:28px}
+.facts{display:flex;flex-wrap:wrap;gap:10px 22px;font-size:15px;font-weight:500}
+.facts li{list-style:none;display:flex;align-items:center;gap:8px}
+.facts li::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--chilli)}
+.fish-layer{position:absolute;inset:0;z-index:1;pointer-events:none}
+.fish{position:absolute;left:-220px;width:190px;fill:#fff;opacity:.07;animation:swim linear infinite}
+.fish.f1{top:22%;animation-duration:38s}
+.fish.f2{top:58%;width:130px;opacity:.05;animation-duration:52s;animation-delay:-20s}
+.fish.f3{top:80%;width:240px;opacity:.06;animation-duration:64s;animation-delay:-38s}
+.fish svg{display:block;width:100%;animation:wiggle 2.4s ease-in-out infinite}
+@keyframes swim{to{transform:translateX(calc(100vw + 460px))}}
+@keyframes wiggle{50%{transform:translateY(10px) rotate(2deg)}}
+.ripple{position:absolute;border:1px solid rgba(255,255,255,.12);border-radius:50%;animation:ring 7s ease-out infinite}
+.ripple.r1{width:340px;height:340px;right:6%;bottom:-120px}
+.ripple.r2{width:340px;height:340px;right:6%;bottom:-120px;animation-delay:-3.5s}
+@keyframes ring{0%{transform:scale(.4);opacity:.9}100%{transform:scale(1.6);opacity:0}}
 
-    nav {
-      background: #d1fae5;
-      padding: 15px;
-      text-align: center;
-    }
+/* Wave divider echoing the logo */
+.wave{position:absolute;left:0;bottom:-1px;width:100%;height:90px;z-index:2;overflow:hidden;pointer-events:none}
+.wave svg{position:absolute;left:0;bottom:0;width:200%;height:100%;animation:drift 14s linear infinite}
+.wave svg:first-child{opacity:.55;animation-duration:22s;animation-direction:reverse}
+.wave svg+svg{height:75%}
+@keyframes drift{to{transform:translateX(-50%)}}
+/* load-in sequence (one orchestrated moment) */
+.intro{opacity:0;transform:translateY(22px)}
+.loaded .intro{animation:rise .8s var(--ease) forwards;animation-delay:calc(var(--i)*110ms)}
+@keyframes rise{to{opacity:1;transform:none}}
 
-    nav a {
-      color: #064e3b;
-      text-decoration: none;
-      margin: 0 12px;
-      font-weight: bold;
-    }
+/* Order builder */
+.order{background:#fff;color:var(--ink);border-radius:22px;padding:28px;box-shadow:0 30px 60px rgba(0,0,0,.28)}
+.order h2{font-size:24px;margin-bottom:4px}
+.order .sub{font-size:14px;color:var(--slate);margin-bottom:20px}
+.field{margin-bottom:18px}
+.field>label,.field>span.lb{display:block;font-weight:600;font-size:14px;margin-bottom:8px}
+.stepper{display:flex;align-items:center;gap:10px}
+.stepper button.s{width:46px;height:46px;border-radius:12px;background:var(--paddy);font-size:22px;font-weight:700;transition:.2s}
+.stepper button.s:hover{background:var(--line)}
+.stepper button.s:active{transform:scale(.92)}
+.stepper input{width:90px;height:46px;text-align:center;font:700 22px var(--display);border:2px solid var(--line);border-radius:12px;background:#fff;color:var(--ink)}
+.stepper input:focus{outline:none;border-color:var(--pond-2)}
+.stepper em{font-style:normal;color:var(--slate);font-weight:600}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:9px 16px;border-radius:99px;border:2px solid var(--line);font-weight:600;font-size:14px;transition:.25s var(--ease)}
+.chip:hover{border-color:var(--pond-2)}
+.chip[aria-pressed=true]{background:var(--pond);border-color:var(--pond);color:#fff}
+.text-in{width:100%;height:46px;padding:0 14px;border:2px solid var(--line);border-radius:12px;font:500 15px var(--body);color:var(--ink)}
+.text-in:focus{outline:none;border-color:var(--pond-2)}
+.preview{background:var(--paddy);border-radius:12px;padding:12px 14px;font-size:14px;color:var(--slate);margin-bottom:16px;min-height:62px;transition:background .3s}
+.btn-wa{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;height:54px;border-radius:14px;background:var(--wa);color:#fff;font-weight:700;font-size:17px;transition:.25s var(--ease);box-shadow:0 8px 20px rgba(31,175,87,.35)}
+.btn-wa:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(31,175,87,.45)}
+.btn-wa svg{width:22px;height:22px;fill:#fff}
+.note{font-size:12.5px;color:var(--slate);text-align:center;margin-top:10px}
 
-    main {
-      max-width: 900px;
-      margin: 40px auto;
-      padding: 0 20px;
-    }
+/* Sections */
+section.block{padding:96px 0}
+.head{max-width:620px;margin-bottom:48px}
+.head h2{font-size:clamp(30px,4.2vw,46px);font-weight:800;margin-bottom:12px}
+.head p{color:var(--slate);font-size:17px}
 
-    .hero {
-      background: white;
-      padding: 35px;
-      border-radius: 16px;
-      text-align: center;
-      box-shadow: 0 5px 20px #0000000d;
-    }
+/* Steps — a real sequence */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;position:relative}
+.step{padding:0 28px 0 0;position:relative}
+.step .dot{width:44px;height:44px;border-radius:50%;background:var(--pond);color:#fff;font:700 18px var(--display);display:grid;place-items:center;margin-bottom:18px;position:relative;z-index:1}
+.step::before{content:"";position:absolute;top:21px;left:44px;right:0;height:2px;background:var(--line)}
+.step::after{content:"";position:absolute;top:21px;left:44px;height:2px;width:0;background:var(--chilli);transition:width 1s var(--ease)}
+.steps.in .step::after{width:calc(100% - 44px)}
+.steps.in .step:nth-child(2)::after{transition-delay:.5s}
+.step:last-child::before,.step:last-child::after{display:none}
+.step h3{font-size:21px;margin-bottom:6px}
+.step p{color:var(--slate);font-size:15.5px}
 
-    .hero h2 {
-      font-size: 32px;
-    }
+/* Benefits */
+.dark{background:var(--ink);color:#fff}
+.dark .head p{color:rgba(255,255,255,.7)}
+.benefits{display:grid;grid-template-columns:1fr 1fr;gap:0 56px}
+.benefit{display:flex;gap:18px;padding:26px 0;border-top:1px solid rgba(255,255,255,.14)}
+.benefit svg{flex:none;width:34px;height:34px;stroke:var(--chilli);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.benefit h3{font-size:20px;margin-bottom:4px}
+.benefit p{font-size:15.5px;opacity:.72}
 
-    .button {
-      display: inline-block;
-      background: #059669;
-      color: white;
-      padding: 13px 22px;
-      border-radius: 8px;
-      text-decoration: none;
-      margin-top: 12px;
-    }
+/* Customers */
+.who{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:18px}
+.who div{border-radius:18px;padding:28px;background:#fff;border:1px solid var(--line);transition:transform .3s var(--ease),border-color .3s}
+.who div:first-child{background:var(--pond);color:#fff;border-color:var(--pond)}
+.who div:hover{transform:translateY(-4px)}
+.who h3{font-size:22px;margin-bottom:8px}
+.who p{font-size:15.5px;opacity:.8}
 
-    footer {
-      text-align: center;
-      background: #064e3b;
-      color: white;
-      padding: 22px;
-      margin-top: 60px;
-    }
-  </style>
+/* FAQ */
+.faq{max-width:760px}
+.q{border-bottom:1px solid var(--line)}
+.q button{width:100%;display:flex;justify-content:space-between;align-items:center;gap:16px;text-align:left;padding:22px 0;font:600 18px var(--body)}
+.q .pm{flex:none;width:26px;height:26px;position:relative}
+.q .pm::before,.q .pm::after{content:"";position:absolute;left:5px;right:5px;top:12px;height:2px;background:var(--pond);transition:.3s var(--ease)}
+.q .pm::after{transform:rotate(90deg)}
+.q button[aria-expanded=true] .pm::after{transform:rotate(0)}
+.ans{display:grid;grid-template-rows:0fr;transition:grid-template-rows .35s var(--ease)}
+.ans>div{overflow:hidden}
+.ans p{padding-bottom:22px;color:var(--slate)}
+.q button[aria-expanded=true]+.ans{grid-template-rows:1fr}
+
+/* Location */
+.loc{display:grid;grid-template-columns:.8fr 1.2fr;gap:36px;align-items:stretch}
+.loc-info dl{display:grid;gap:18px;margin:24px 0}
+.loc-info dt{font-weight:700;font-size:14px;color:var(--pond-2)}
+.loc-info dd{font-size:16.5px}
+.loc-info dd a{border-bottom:2px solid var(--line);transition:.2s}
+.loc-info dd a:hover{border-color:var(--chilli)}
+.btn-line{display:inline-flex;height:48px;align-items:center;padding:0 22px;border-radius:12px;border:2px solid var(--ink);font-weight:700;transition:.25s}
+.btn-line:hover{background:var(--ink);color:#fff}
+.map{border-radius:20px;overflow:hidden;min-height:380px;box-shadow:0 14px 40px rgba(7,28,66,.15)}
+.map iframe{width:100%;height:100%;min-height:380px;border:0}
+
+footer{background:var(--ink);color:rgba(255,255,255,.72);padding:44px 0;font-size:14px}
+footer .row{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
+footer b{font-family:var(--display);color:#fff;font-size:18px}
+
+/* Floating WhatsApp */
+.fab{position:fixed;right:20px;bottom:20px;z-index:60;display:flex;align-items:center;gap:10px;height:58px;padding:0 20px 0 16px;border-radius:99px;background:var(--wa);color:#fff;font-weight:700;box-shadow:0 10px 28px rgba(0,0,0,.28);transform:translateY(90px);opacity:0;transition:.45s var(--ease)}
+.fab.show{transform:none;opacity:1}
+.fab:hover{transform:translateY(-3px)}
+.fab svg{width:26px;height:26px;fill:#fff}
+
+/* Scroll reveal (light, once) */
+.rv{opacity:0;transform:translateY(18px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.rv.in{opacity:1;transform:none}
+
+@media(max-width:900px){
+  .hero{padding:110px 0 60px}
+  .hero-grid,.loc{grid-template-columns:1fr}
+  .benefits{grid-template-columns:1fr}
+  .who{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr;gap:28px}
+  .step{padding:0 0 0 62px}
+  .step .dot{position:absolute;left:0;top:0;margin:0}
+  .step::before{top:44px;left:21px;right:auto;width:2px;height:calc(100% + 28px)}
+  .step::after{display:none}
+  section.block{padding:70px 0}
+  .burger{display:block}
+  .nav{position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:stretch;background:var(--ink);padding:10px 22px 20px;gap:2px;clip-path:inset(0 0 100% 0);visibility:hidden;transition:clip-path .4s var(--ease),visibility .4s}
+  .nav.open{clip-path:inset(0);visibility:visible}
+  .nav a{padding:14px;font-size:17px}
+  .nav .cta{margin:8px 0 0;text-align:center}
+  .fab span{display:none}.fab{padding:0 16px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .intro,.rv{opacity:1;transform:none}
+}
+</style>
 </head>
 <body>
 
-  <header>
-    <h1>SERANTAU FRESH SUPPLY</h1>
-    <p>Fresh Fish Distribution</p>
-  </header>
+<header class="site-header" id="top">
+  <div class="wrap bar">
+    <a class="brand" href="#utama" aria-label="Serantau Fresh Supply">
+      <img src="logo.png" alt="" onerror="this.style.display='none'">
+      <span><b>Serantau Fresh Supply</b><small>Ikan keli segar & bersih</small></span>
+    </a>
+    <button class="burger" id="burger" aria-label="Buka menu" aria-expanded="false" aria-controls="nav"><span></span><span></span></button>
+    <nav class="nav" id="nav">
+      <a href="#cara">Cara pesan</a>
+      <a href="#kelebihan">Kelebihan</a>
+      <a href="#soalan">Soalan lazim</a>
+      <a href="#lokasi">Lokasi</a>
+      <a href="#pesan" class="cta">Pesan sekarang</a>
+    </nav>
+  </div>
+</header>
 
-  <nav>
-    <a href="#about">About Us</a>
-    <a href="#products">Products</a>
-    <a href="#contact">Contact</a>
-  </nav>
+<main>
+<section class="hero" id="utama">
+  <div class="fish-layer" aria-hidden="true">
+    <div class="fish f1"><svg viewBox="0 0 200 80"><use href="#catfish" transform="translate(200,0) scale(-1,1)"/></svg></div>
+    <div class="fish f2"><svg viewBox="0 0 200 80"><use href="#catfish" transform="translate(200,0) scale(-1,1)"/></svg></div>
+    <div class="fish f3"><svg viewBox="0 0 200 80"><use href="#catfish" transform="translate(200,0) scale(-1,1)"/></svg></div>
+    <span class="ripple r1"></span><span class="ripple r2"></span>
+  </div>
+  <div class="wave" aria-hidden="true">
+    <svg viewBox="0 0 1440 90" preserveAspectRatio="none"><path fill="#1AB7F0" d="M0 45c120-40 240-40 360 0s240 40 360 0 240-40 360 0 240 40 360 0v45H0z"/></svg>
+    <svg viewBox="0 0 1440 90" preserveAspectRatio="none"><path fill="#F1F7FC" d="M0 55c120-35 240-35 360 0s240 35 360 0 240-35 360 0 240 35 360 0v35H0z"/></svg>
+  </div>
+  <div class="wrap hero-grid">
+    <div>
+      <h1 class="intro" style="--i:0">Ikan keli siap bersih. Terus masak.</h1>
+      <p class="lead intro" style="--i:1">Kami siang, buang lendir dan bersihkan ikan keli untuk peniaga, kedai makan dan rumah di Langkawi & Kedah. Anda hanya perlu masak.</p>
+      <ul class="facts intro" style="--i:2">
+        <li>Segar setiap hari</li><li>Dihantar ke lokasi anda</li><li>Harga terus dari pembekal</li>
+      </ul>
+    </div>
 
-  <main>
-    <section class="hero">
-      <h2>Fresh Fish for Your Business</h2>
-      <p>
-        Your trusted partner for fresh fish distribution,
-        cleaned catfish and bulk supply enquiries.
-      </p>
-      <a class="button" href="#contact">Contact Us</a>
-    </section>
+    <form class="order intro" style="--i:3" id="pesan" onsubmit="return false">
+      <h2>Buat pesanan</h2>
+      <p class="sub">Isi butiran. Mesej akan siap ditulis untuk anda di WhatsApp.</p>
+      <div class="field">
+        <label for="kg">Berapa kilogram?</label>
+        <div class="stepper">
+          <button type="button" class="s" id="minus" aria-label="Kurang 1 kg">−</button>
+          <input id="kg" type="number" inputmode="decimal" min="1" max="1000" value="10">
+          <em>kg</em>
+          <button type="button" class="s" id="plus" aria-label="Tambah 1 kg">+</button>
+        </div>
+      </div>
+      <div class="field">
+        <span class="lb" id="jl">Anda pesan untuk</span>
+        <div class="chips" role="group" aria-labelledby="jl" id="jenis">
+          <button type="button" class="chip" aria-pressed="true">Kedai makan</button>
+          <button type="button" class="chip" aria-pressed="false">Peniaga / gerai</button>
+          <button type="button" class="chip" aria-pressed="false">Guna sendiri</button>
+        </div>
+      </div>
+      <div class="field">
+        <label for="lok">Lokasi penghantaran</label>
+        <input class="text-in" id="lok" type="text" placeholder="Contoh: Kuah, Langkawi" autocomplete="address-level2">
+      </div>
+      <div class="preview" id="preview" aria-live="polite"></div>
+      <a class="btn-wa" id="send" href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.2 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.800-1.100-4.500-4-4.700-4.200-.1-.2-1.100-1.500-1.100-2.800s.7-2 1-2.300c.2-.3.500-.3.700-.3h.5c.2 0 .4 0 .6.500l.8 2c.1.200.1.400 0 .500l-.4.600c-.1.200-.3.300-.1.600.2.300.8 1.300 1.700 2.100 1.200 1 2.100 1.300 2.400 1.500.3.100.4.100.6-.1l.8-1c.2-.3.400-.2.700-.1l1.900.9c.3.100.5.200.5.300.1.200.1.800-.1 1.400z"/></svg>
+        Hantar pesanan di WhatsApp
+      </a>
+      <p class="note">Harga bergantung kuantiti & lokasi. Kami balas dengan sebut harga terkini.</p>
+    </form>
+  </div>
+</section>
 
-    <section id="about">
-      <h2>About Us</h2>
-      <p>
-        Serantau Fresh Supply focuses on fresh fish distribution
-        and supplying customers with practical, reliable service.
-      </p>
-    </section>
+<section class="block" id="cara">
+  <div class="wrap">
+    <div class="head rv"><h2>Pesan dalam tiga langkah</h2><p>Tiada borang panjang. Semua selesai melalui WhatsApp.</p></div>
+    <div class="steps rv" id="steps">
+      <div class="step"><div class="dot">1</div><h3>Beritahu keperluan</h3><p>Hantar berapa kilogram dan ke mana ikan perlu dihantar.</p></div>
+      <div class="step"><div class="dot">2</div><h3>Kami sediakan</h3><p>Ikan disiang dan dibersihkan mengikut kuantiti pesanan anda.</p></div>
+      <div class="step"><div class="dot">3</div><h3>Terima di lokasi</h3><p>Ikan dihantar ke tempat anda di Langkawi atau kawasan berdekatan.</p></div>
+    </div>
+  </div>
+</section>
 
-    <section id="products">
-      <h2>Our Products</h2>
-      <p>Cleaned catfish and bulk fish supply, subject to availability.</p>
-    </section>
+<section class="block dark" id="kelebihan">
+  <div class="wrap">
+    <div class="head rv"><h2>Kenapa pelanggan kekal bersama kami</h2><p>Kami hanya fokus pada satu ikan, supaya kualitinya konsisten.</p></div>
+    <div class="benefits rv">
+      <div class="benefit"><svg viewBox="0 0 24 24"><path d="M3 12c3-5 8-6 12-3l6-2-2 5 2 5-6-2c-4 3-9 2-12-3z"/><circle cx="8" cy="11" r=".6"/></svg><div><h3>Segar setiap hari</h3><p>Diambil segar dan terus diproses, bukan disimpan berhari-hari.</p></div></div>
+      <div class="benefit"><svg viewBox="0 0 24 24"><path d="M4 20 20 4M14 4h6v6M4 14v6h6"/></svg><div><h3>Siap dibersihkan</h3><p>Disiang, lendir dibuang. Jimat masa dapur anda.</p></div></div>
+      <div class="benefit"><svg viewBox="0 0 24 24"><path d="M2 7h12v9H2zM14 10h4l4 3v3h-8zM6 19a2 2 0 1 0 0-.1M18 19a2 2 0 1 0 0-.1"/></svg><div><h3>Hantar ke lokasi anda</h3><p>Penghantaran di Langkawi dan kawasan berdekatan.</p></div></div>
+      <div class="benefit"><svg viewBox="0 0 24 24"><path d="M12 3v18M16.500 7.500C15.500 6 14 5.500 12 5.500 9.500 5.500 8 6.700 8 8.500s1.500 2.500 4 3 4 1.200 4 3-1.500 3-4 3c-2 0-3.500-.7-4.500-2"/></svg><div><h3>Harga terus dari pembekal</h3><p>Tanpa perantara, supaya harga kekal berbaloi untuk perniagaan anda.</p></div></div>
+    </div>
+  </div>
+</section>
 
-    <section id="contact">
-      <h2>Contact Us</h2>
-      <p>Contact us to enquire about quantity, price and delivery.</p>
-      <p>Website: serantaufreshsupply.my</p>
-    </section>
-  </main>
+<section class="block">
+  <div class="wrap">
+    <div class="head rv"><h2>Sesuai untuk siapa?</h2></div>
+    <div class="who rv">
+      <div><h3>Kedai makan & restoran</h3><p>Bekalan tetap dengan saiz dan kebersihan yang sama setiap kali. Bincang jadual penghantaran dengan kami.</p></div>
+      <div><h3>Peniaga & gerai</h3><p>Ambil mengikut kuantiti yang anda jual.</p></div>
+      <div><h3>Keluarga</h3><p>Pesan sedikit pun boleh, untuk masak di rumah.</p></div>
+    </div>
+  </div>
+</section>
 
-  <footer>
-    © 2026 Serantau Fresh Supply
-  </footer>
+<section class="block" id="soalan" style="background:#fff">
+  <div class="wrap">
+    <div class="head rv"><h2>Soalan lazim</h2></div>
+    <div class="faq rv">
+      <div class="q"><button aria-expanded="false"><span>Berapa harga seekor atau sekilogram?</span><i class="pm"></i></button><div class="ans"><div><p>Harga bergantung pada kuantiti dan lokasi penghantaran. Hantar pesanan melalui WhatsApp dan kami balas dengan harga terkini.</p></div></div></div>
+      <div class="q"><button aria-expanded="false"><span>Adakah ada kuantiti minimum?</span><i class="pm"></i></button><div class="ans"><div><p>Sila tanya terus semasa membuat pesanan. Kami boleh bantu untuk pelanggan rumah dan perniagaan.</p></div></div></div>
+      <div class="q"><button aria-expanded="false"><span>Kawasan mana yang anda hantar?</span><i class="pm"></i></button><div class="ans"><div><p>Kami menghantar di Langkawi dan kawasan berdekatan. Tulis lokasi anda dalam pesanan untuk kami sahkan.</p></div></div></div>
+      <div class="q"><button aria-expanded="false"><span>Ada ikan lain selain keli?</span><i class="pm"></i></button><div class="ans"><div><p>Buat masa ini hanya ikan keli. Jenis lain akan ditambah kemudian.</p></div></div></div>
+    </div>
+  </div>
+</section>
 
+<section class="block" id="lokasi">
+  <div class="wrap loc">
+    <div class="loc-info rv">
+      <h2 style="font-size:clamp(30px,4vw,42px);font-weight:800">Datang atau hubungi kami</h2>
+      <dl>
+        <div><dt>Alamat</dt><dd>No 42, Kg Padang Lalang, Kuah,<br>Langkawi, Kedah<br>(bersebelahan Inapan An Nuris)</dd></div>
+        <div><dt>Telefon & WhatsApp</dt><dd><a href="tel:01114602463">011-1460 2463</a></dd></div>
+        <div><dt>Pemilik</dt><dd>Mohd Rafee bin Abd Aziz<br>Mohamed Ady Putra bin Mohamed Ismail</dd></div>
+        <div><dt>No. SSM</dt><dd>202603265484</dd></div>
+      </dl>
+      <a class="btn-line" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Kg+Padang+Lalang+Kuah+Langkawi+Kedah">Buka di Google Maps</a>
+    </div>
+    <div class="map rv">
+      <iframe loading="lazy" title="Lokasi Serantau Fresh Supply" referrerpolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q=Kg+Padang+Lalang+Kuah+Langkawi+Kedah&output=embed"></iframe>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap row">
+    <div><b>Serantau Fresh Supply</b><br>Pembekal ikan keli segar, Langkawi & Kedah</div>
+    <div>© 2026 Serantau Fresh Supply. Hak cipta terpelihara.</div>
+  </div>
+</footer>
+
+<a class="fab" id="fab" target="_blank" rel="noopener" href="https://wa.me/601114602463?text=Salam%20Serantau%20Fresh%20Supply%2C%20saya%20nak%20tanya%20harga%20ikan%20keli" aria-label="Chat di WhatsApp">
+  <svg viewBox="0 0 24 24"><use href="#wa"/></svg><span>Chat WhatsApp</span>
+</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="catfish" viewBox="0 0 200 80"><path d="M40 40C40 22 80 16 120 22c24 4 44 10 78 0-6 12-8 24 0 36-34-10-54-4-78 0-40 6-80 0-80-18zM40 36 6 20M40 42 2 46M44 46 14 66"/><circle cx="62" cy="34" r="3" fill="#0B2B5E"/></symbol>
+    <symbol id="wa" viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z"/></symbol>
+  </defs>
+</svg>
+
+<script>
+(function(){
+  var WA='601114602463', $=function(s){return document.querySelector(s)};
+
+  // Page-load sequence
+  requestAnimationFrame(function(){document.documentElement.classList.add('loaded')});
+
+  // Header + floating button on scroll
+  var header=$('.site-header'), fab=$('#fab');
+  function onScroll(){
+    var y=window.scrollY;
+    header.classList.toggle('scrolled',y>40);
+    fab.classList.toggle('show',y>520);
+  }
+  onScroll(); window.addEventListener('scroll',onScroll,{passive:true});
+
+  // Mobile menu
+  var burger=$('#burger'), nav=$('#nav');
+  function closeMenu(){nav.classList.remove('open');burger.setAttribute('aria-expanded','false')}
+  burger.addEventListener('click',function(){
+    var o=nav.classList.toggle('open');
+    burger.setAttribute('aria-expanded',o);
+    burger.setAttribute('aria-label',o?'Tutup menu':'Buka menu');
+  });
+  nav.addEventListener('click',function(e){if(e.target.tagName==='A')closeMenu()});
+
+  // Order builder
+  var kg=$('#kg'), lok=$('#lok'), prev=$('#preview'), send=$('#send'), jenis='Kedai makan';
+  function val(){var v=parseFloat(kg.value);return isNaN(v)||v<1?1:Math.min(v,1000)}
+  function build(){
+    var k=val(), l=lok.value.trim();
+    var msg='Salam Serantau Fresh Supply, saya nak pesan ikan keli siap bersih.\n'+
+      'Kuantiti: '+k+' kg\nUntuk: '+jenis+'\nLokasi: '+(l||'(akan dimaklumkan)')+'\nBoleh bagi harga?';
+    prev.textContent='';
+    var b=document.createElement('b'); b.textContent=k+' kg ikan keli'; 
+    prev.appendChild(b);
+    prev.appendChild(document.createTextNode(' untuk '+jenis.toLowerCase()+(l?', hantar ke '+l:'')+'. Tekan butang di bawah untuk hantar.'));
+    send.href='https://wa.me/'+WA+'?text='+encodeURIComponent(msg);
+  }
+  $('#minus').onclick=function(){kg.value=Math.max(1,val()-1);build()};
+  $('#plus').onclick=function(){kg.value=Math.min(1000,val()+1);build()};
+  kg.addEventListener('input',build); lok.addEventListener('input',build);
+  kg.addEventListener('blur',function(){kg.value=val();build()});
+  document.querySelectorAll('#jenis .chip').forEach(function(c){
+    c.addEventListener('click',function(){
+      document.querySelectorAll('#jenis .chip').forEach(function(x){x.setAttribute('aria-pressed','false')});
+      c.setAttribute('aria-pressed','true'); jenis=c.textContent; build();
+    });
+  });
+  build();
+
+  // FAQ accordion (one open at a time)
+  var qs=document.querySelectorAll('.q button');
+  qs.forEach(function(b){
+    b.addEventListener('click',function(){
+      var open=b.getAttribute('aria-expanded')==='true';
+      qs.forEach(function(x){x.setAttribute('aria-expanded','false')});
+      b.setAttribute('aria-expanded',String(!open));
+    });
+  });
+
+  // Reveal once on scroll
+  var els=document.querySelectorAll('.rv');
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(e.isIntersecting){
+          e.target.classList.add('in');
+          if(e.target.id==='steps')e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    },{threshold:.15});
+    els.forEach(function(el){io.observe(el)});
+  } else { els.forEach(function(el){el.classList.add('in')}); }
+})();
+</script>
 </body>
 </html>
